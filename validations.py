@@ -288,20 +288,17 @@ class CaixaAccidentes:
                 workbook = load_workbook(filename=pathToFiles + file)
                 sheet = workbook.active
                 sheet["AB1"] = 'TARGET'
-                workbook.save(pathToFiles + file)
                 df = pd.read_excel(pathToFiles + file)
                 line_number = 2
                 print("Se establece el valor GRAL por defecto en la columna TARGET en " + file)
                 for index, row in df.iterrows():
                     # añadimos valor GRAL en la columna target
-                    workbook = load_workbook(filename=pathToFiles + file)
-                    sheet = workbook.active
                     sheet["AB" + str(line_number)] = 'GRAL'
                     workbook.save(pathToFiles + file)
+                    print("Se escribe GRAL en la celda AB" + str(line_number))
                     # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(
-                            line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
+                        print("La fila " + str(line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
@@ -314,8 +311,8 @@ class CaixaAccidentes:
                                 line_number) + " no tiene datos en la columna MARCA en " + file + "\n")
                         checkIfBrandExist = False
                         checkToReturn = False
-                line_number += 1
-                print("Se establece en la columna TARGET el valor GRAL por defecto en " + file)
+                    workbook.save(pathToFiles + file)
+                    line_number += 1
             else:
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
