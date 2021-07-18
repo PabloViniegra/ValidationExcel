@@ -311,8 +311,8 @@ class CaixaAccidentes:
                                 line_number) + " no tiene datos en la columna MARCA en " + file + "\n")
                         checkIfBrandExist = False
                         checkToReturn = False
-                    workbook.save(pathToFiles + file)
                     line_number += 1
+                workbook.save(pathToFiles + file)
             else:
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
