@@ -1,35 +1,41 @@
 import re, datetime
 import pandas as pd
 from openpyxl import load_workbook
+
 pathToFiles = '../FTP/'
 
-class PremiamosTuConfianzaDentalPre():
+
+class PremiamosTuConfianzaDentalPre:
     excelfiles = []
     patternToExcel = ""
+
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
         checkToReturn = True
         for file in self.excelfiles:
             if re.match(self.patternToExcel, file, re.M | re.I):
+                print("Analizando " + file + " ....")
                 checkNIFandCard = True
                 df = pd.read_excel(pathToFiles + file)
                 line_number = 2
                 for index, row in df.iterrows():
-                    #validación de idioma
+                    # validación de idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file)
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
                         workbook.save(pathToFiles + file)
-                    #validación si el numero de tarjeta o el nif vienen vacíos
+                    # validación si el numero de tarjeta o el nif vienen vacíos
                     if pd.isna(row['N_TARJETA']) and pd.isna(row['NIF']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
                         checkNIFandCard = False
                         checkToReturn = False
                     line_number += 1
@@ -38,22 +44,22 @@ class PremiamosTuConfianzaDentalPre():
         return checkToReturn
 
 
-class VentajasBasico():
+class VentajasBasico:
     excelfiles = []
     patternToExcel = ""
 
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
         checkToReturn = True
         for file in self.excelfiles:
 
             if re.match(self.patternToExcel, file, re.M | re.I):
-                print(file)
+                print("Analizando " + file + " ....")
                 checkIfCardExist = True
-                #Creamos la columna de TARGET para agregar los datos que se piden
+                # Creamos la columna de TARGET para agregar los datos que se piden
                 workbook = load_workbook(filename=pathToFiles + file)
                 sheet = workbook.active
                 sheet["Z1"] = 'TARGET'
@@ -68,28 +74,31 @@ class VentajasBasico():
                     targetToAdd = 'GRAL'
                     print("En el archivo " + file + " el target debe ser GRAL")
                 for index, row in df.iterrows():
-                    #validación del idioma
+                    # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file)
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
                         workbook.save('ExcelFiles/' + file)
-                    #validación de si el numero de tarjeta está en blanco
+                    # validación de si el numero de tarjeta está en blanco
                     if pd.isna(row['N_TARJETA']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene número de tarjeta en " + file + "\n")
                         checkIfCardExist = False
                         checkToReturn = False
-                    #validación de si el codigo de promo esta en blanco o no es el especificado
+                    # validación de si el codigo de promo esta en blanco o no es el especificado
                     if 'CADB1' != row['CODIGO_PROMO'] or pd.isna(row['CODIGO_PROMO']):
-                        print("La fila " + str(line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CADB1 por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CADB1 por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["Y" + str(line_number)] = 'CADB1'
                         workbook.save(pathToFiles + file)
-                    #Escribimos en la columna TARGET su valor correspondiente
+                    # Escribimos en la columna TARGET su valor correspondiente
                     workbook = load_workbook(filename=pathToFiles + file)
                     sheet = workbook.active
                     sheet["Z" + str(line_number)] = targetToAdd
@@ -99,30 +108,33 @@ class VentajasBasico():
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
 
-class VentajasPlena():
+
+class VentajasPlena:
     excelfiles = []
     patternToExcel = ""
 
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
         checkToReturn = True
         for file in self.excelfiles:
-            checkIfCardExist = True
-            targetToAdd = 'GRAL'
-            workbook = load_workbook(filename=pathToFiles + file)
-            sheet = workbook.active
-            sheet["Z1"] = 'TARGET'
-            workbook.save(pathToFiles + file)
             if re.match(self.patternToExcel, file, re.M | re.I):
+                print("Analizando " + file + " ....")
+                checkIfCardExist = True
+                targetToAdd = 'GRAL'
+                workbook = load_workbook(filename=pathToFiles + file)
+                sheet = workbook.active
+                sheet["Z1"] = 'TARGET'
+                workbook.save(pathToFiles + file)
                 df = pd.read_excel(pathToFiles + file)
                 line_number = 2
                 for index, row in df.iterrows():
-                    #validación del idioma
+                    # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file)
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
@@ -131,17 +143,19 @@ class VentajasPlena():
                     if pd.isna(row['N_TARJETA']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene número de tarjeta en " + file + "\n")
                         checkIfCardExist = False
                         checkToReturn = False
                         # validación de si el codigo de promo esta en blanco o no es el especificado
                     if 'CAD2' != row['CODIGO_PROMO'] or pd.isna(row['CODIGO_PROMO']):
-                        print("La fila " + str(line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CAD2 por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CAD2 por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["Y" + str(line_number)] = 'CAD2'
                         workbook.save(pathToFiles + file)
-                    #Escribimos en la columna TARGET el valor especificado
+                    # Escribimos en la columna TARGET el valor especificado
                     workbook = load_workbook(filename=pathToFiles + file)
                     sheet = workbook.active
                     sheet["Z" + str(line_number)] = targetToAdd
@@ -151,17 +165,19 @@ class VentajasPlena():
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
 
-class RevisionMedica():
+
+class RevisionMedica:
     excelfiles = []
     patternToExcel = ""
 
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
         checkToReturn = True
         for file in self.excelfiles:
+            print("Analizando " + file + " ....")
             checkIfCardExist = True
             checkIfSexExist = True
             if re.match(self.patternToExcel, file, re.M | re.I):
@@ -169,57 +185,65 @@ class RevisionMedica():
                 line_number = 2
                 for index, row in df.iterrows():
                     checkIfSexExist = True
-                    #validación del idioma
+                    # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file)
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
-                        sheet["C" + str(line_number)] = "CAS"
+                        sheet["R" + str(line_number)] = "CAS"
                         workbook.save(pathToFiles + file)
                     # validación de si el numero de tarjeta está en blanco
                     if pd.isna(row['N_TARJETA']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene número de tarjeta en " + file + "\n")
                         checkIfCardExist = False
                         checkToReturn = False
                     # validación de si el codigo de promo esta en blanco o no es el especificado
                     if 'RMA' != row['CODIGO_PROMO'] or pd.isna(row['CODIGO_PROMO']):
-                        print("La fila " + str(line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CAD2 por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece RMA por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["W" + str(line_number)] = 'RMA'
                         workbook.save(pathToFiles + file)
-                    #validación de si no hay sexo especificado en las filas
+                    # validación de si no hay sexo especificado en las filas
                     if pd.isna(row['SEXO']):
                         print("La fila " + str(line_number) + " no tiene el sexo de la persona establecido en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene sexo especificado para la persona en" + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene sexo especificado para la persona en" + file + "\n")
                         checkIfSexExist = False
                         checkToReturn = False
-                    #validacion de si no hay el tipo especificado en las filas
+                    # validacion de si no hay el tipo especificado en las filas
                     if 'TITULAR' != row['TIPO'] or 'BENEFICIARIO' != row['TIPO']:
                         print("La fila " + str(line_number) + " tiene un tipo distinto del establecido en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " tiene un tipo distinto del establecido en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " tiene un tipo distinto del establecido en " + file + "\n")
                     line_number += 1
             else:
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
-#Se juntan la campaña 5 y 6 porque tienen las mismas validaciones
-class SACAdeslasBasicaYPlena():
+
+
+# Se juntan la campaña 5 y 6 porque tienen las mismas validaciones
+class SACAdeslasBasicaYPlena:
     excelfiles = []
     patternToExcel = ""
 
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
         checkToReturn = True
         for file in self.excelfiles:
             if re.match(self.patternToExcel, file, re.M | re.I):
-                #escribimos la columna target
+                print("Analizando " + file + " ....")
+                # escribimos la columna target
                 workbook = load_workbook(filename=pathToFiles + file)
                 sheet = workbook.active
                 sheet["AB1"] = 'TARGET'
@@ -230,10 +254,11 @@ class SACAdeslasBasicaYPlena():
                     workbook = load_workbook(filename=pathToFiles + file)
                     sheet = workbook.active
                     sheet["AB" + str(line_number)] = 'GRAL'
-                    workbook.save(pathToFiles +  file)
+                    workbook.save(pathToFiles + file)
                     # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
@@ -244,20 +269,22 @@ class SACAdeslasBasicaYPlena():
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
 
-class CaixaAccidentes():
+
+class CaixaAccidentes:
     excelfiles = []
     patternToExcel = ""
 
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
         checkToReturn = True
         checkIfBrandExist = True
         for file in self.excelfiles:
+            print("Analizando " + file + " ....")
             if re.match(self.patternToExcel, file, re.M | re.I):
-                #Añadimos la columna target
+                # Añadimos la columna target
                 workbook = load_workbook(filename=pathToFiles + file)
                 sheet = workbook.active
                 sheet["AB1"] = 'TARGET'
@@ -266,23 +293,25 @@ class CaixaAccidentes():
                 line_number = 2
                 print("Se establece el valor GRAL por defecto en la columna TARGET en " + file)
                 for index, row in df.iterrows():
-                    #añadimos valor GRAL en la columna target
+                    # añadimos valor GRAL en la columna target
                     workbook = load_workbook(filename=pathToFiles + file)
                     sheet = workbook.active
                     sheet["AB" + str(line_number)] = 'GRAL'
                     workbook.save(pathToFiles + file)
                     # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
                         workbook.save(pathToFiles + file)
-                    #validacion si la columna de Marca está vacía
+                    # validacion si la columna de Marca está vacía
                     if pd.isna(row['MARCA']):
-                        print("La fila " + str(line_number) + " no tiene datos en la columna MARCA en " +  file)
+                        print("La fila " + str(line_number) + " no tiene datos en la columna MARCA en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene datos en la columna MARCA en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene datos en la columna MARCA en " + file + "\n")
                         checkIfBrandExist = False
                         checkToReturn = False
                 line_number += 1
@@ -291,42 +320,40 @@ class CaixaAccidentes():
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
 
-class PremiamosTuConfianzaDentalPost():
+
+class PremiamosTuConfianzaDentalPost:
     excelfiles = []
     patternToExcel = ""
 
     def __init__(self, excelfiles, patternToExcel):
-        excelfiles = self.excelfiles
-        patternToExcel = self.patternToExcel
+        self.excelfiles = excelfiles
+        self.patternToExcel = patternToExcel
 
     def executeValidations(self):
-        checkToReturn = False
+        checkToReturn = True
         for file in self.excelfiles:
             if re.match(self.patternToExcel, file, re.M | re.I):
-                checkNIFandCard = True
-                checkPromotionalCode = True
+                print("Analizando " + file + " ....")
                 df = pd.read_excel(pathToFiles + file)
                 line_number = 2
                 for index, row in df.iterrows():
-                    #validación de idioma
+                    # validación de idioma
                     if pd.isna(row['IDIOMA']):
                         print("La fila " + str(line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
                         workbook.save(pathToFiles + file)
-                    #validación de que venga NIF o número de tarjeta
+                    # validación de que venga NIF o número de tarjeta
                     if pd.isna(row['N_TARJETA']) and pd.isna(row['NIF']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file)
                         with open('../validations.txt', 'a') as f:
                             f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
-                        checkNIFandCard = False
                         checkToReturn = False
                     if 'SRD4' != row['CODIGO_PROMO']:
                         print("La fila " + str(line_number) + " no tiene el código promocional correcto en " + file)
                         with open('../validations.txt', 'a') as f:
                             f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene el código promocional correcto en " + file + "\n")
-                        checkPromotionalCode = False
                         checkToReturn = False
                     line_number += 1
             else:

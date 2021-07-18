@@ -1,5 +1,6 @@
 import os, sys
 import validations
+
 #Cuando ejecutemos el script tiene que venir como argumento el nombre de la campaña para saber que validacion hacer. Con sys.argv recogemos una lista de los argumentos donde el [0] es el propio nombre del script
 if len(sys.argv) == 2:
     path = '../FTP/'
