@@ -46,7 +46,7 @@ class PremiamosTuConfianzaDentalPre:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                             checkToReturn = False
                         else:
-                            if re.match('(666|696)+[ \d]?', row['TELEFONO_MOVIL_SMS'], re.M) or re.match('(666|696)+[ \d]?', row['TELEFONO_MOVIL_SMS_2'], re.M):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene números de teléfono válidos")
                                 with open('../validations.txt', 'a') as f:
@@ -127,10 +127,7 @@ class VentajasBasico:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                                 checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
@@ -208,10 +205,7 @@ class VentajasPlena:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                                 checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
@@ -299,10 +293,7 @@ class RevisionMedica:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                                 checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
@@ -362,10 +353,7 @@ class SACAdeslasBasicaYPlena:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                                 checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
@@ -432,10 +420,7 @@ class CaixaAccidentes:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                                 checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
@@ -499,10 +484,7 @@ class PremiamosTuConfianzaDentalPost:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                                 checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS']), re.M) or re.fullmatch("(666|696)+[ \d]?", str(row['TELEFONO_MOVIL_SMS_2']), re.M):
                                 print(
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
