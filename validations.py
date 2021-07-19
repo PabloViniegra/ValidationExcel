@@ -46,12 +46,9 @@ class PremiamosTuConfianzaDentalPre:
                                     line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                             checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
-                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
-                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                            if re.match('(666|696)+[ \d]?', row['TELEFONO_MOVIL_SMS'], re.M) or re.match('(666|696)+[ \d]?', row['TELEFONO_MOVIL_SMS_2'], re.M):
                                 print(
-                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                    "La fila " + str(line_number) + " no tiene números de teléfono válidos")
                                 with open('../validations.txt', 'a') as f:
                                     f.write(str(datetime.datetime.now()) + ": La fila " + str(
                                         line_number) + " los números de teléfono no son válidos en " + file + "\n")
