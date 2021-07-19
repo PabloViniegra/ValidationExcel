@@ -29,6 +29,8 @@ class PremiamosTuConfianzaDentalPre:
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
                         workbook.save(pathToFiles + file)
+                        with open('../OK.txt', 'a') as f:
+                            f.write("La fila " + str(line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS" + "\n")
                     # validación si el numero de tarjeta o el nif vienen vacíos
                     if pd.isna(row['N_TARJETA']) and pd.isna(row['NIF']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file)
@@ -39,6 +41,8 @@ class PremiamosTuConfianzaDentalPre:
                     # validación de la vía de impacto
                     if pd.isna(row['CORREO_CLIENTE']):
                         print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        with open('../OK.txt', 'a') as f:
+                            f.write("La fila " + str(line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS" + "\n")
                         if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
                             print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                             with open('../validations.txt', 'a') as f:
@@ -50,13 +54,17 @@ class PremiamosTuConfianzaDentalPre:
                                 print(
                                     "La fila " + str(line_number) + " no tiene números de teléfono válidos")
                                 with open('../validations.txt', 'a') as f:
-                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    f.write(str(datetime.datetime.now()) + ": En la fila " + str(
                                         line_number) + " los números de teléfono no son válidos en " + file + "\n")
                                 checkToReturn = False
                             else:
                                 print("Fila " + str(line_number) + " vía de impacto SMS")
+                                with open('../OK.txt', 'a') as f:
+                                    f.write("Fila " + str(line_number) + " su vía de impacto es SMS" "\n")
                     else:
                         print("Fila " + str(line_number) + " vía de impacto CORREO")
+                        with open('../OK.txt', 'a') as f:
+                            f.write("Fila " + str(line_number) + " su vía de impacto es EMAIL" "\n")
                     line_number += 1
             else:
                 raise Exception(file + " is not an Excel File !")

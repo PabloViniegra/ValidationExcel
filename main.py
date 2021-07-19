@@ -12,7 +12,8 @@ if len(sys.argv) == 2:
         check = parser1.executeValidations()
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
-            open('../OK.txt', 'w')
+            with open('../OK.txt', 'a') as f:
+                f.write("Se han realizado las validaciones son problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Ventajas_Basico' == sys.argv[1]:
@@ -21,7 +22,8 @@ if len(sys.argv) == 2:
         check = parser2.executeValidations()
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
-            open('../OK.txt', 'w')
+            with open('../OK.txt', 'a') as f:
+                f.write("Se han realizado las validaciones son problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Ventajas_Plena' == sys.argv[1]:
@@ -30,7 +32,8 @@ if len(sys.argv) == 2:
         check = parser3.executeValidations()
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
-            open('../OK.txt', 'w')
+            with open('../OK.txt', 'a') as f:
+                f.write("Se han realizado las validaciones son problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Revision_Medica' == sys.argv[1]:
@@ -48,7 +51,8 @@ if len(sys.argv) == 2:
         check = parser5_6.executeValidations()
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
-            open('../OK.txt', 'w')
+            with open('../OK.txt', 'a') as f:
+                f.write("Se han realizado las validaciones son problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Caixa_Accidentes' == sys.argv[1]:
@@ -57,7 +61,8 @@ if len(sys.argv) == 2:
         check = parser7.executeValidations()
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
-            open('../OK.txt', 'w')
+            with open('../OK.txt', 'a') as f:
+                f.write("Se han realizado las validaciones son problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Premiamos_Tu_Confianza_Dental_Post' == sys.argv[1]:
@@ -66,7 +71,8 @@ if len(sys.argv) == 2:
         check = parser8.executeValidations()
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
-            open('../OK.txt', 'w')
+            with open('../OK.txt', 'a') as f:
+                f.write("Se han realizado las validaciones son problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     else:
