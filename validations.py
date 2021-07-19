@@ -489,7 +489,7 @@ class PremiamosTuConfianzaDentalPost:
                                     "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
                                     f.write(str(datetime.datetime.now()) + ": La fila " + str(
-                                        line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                        line_number) + " los números de teléfono no son válidos en " + file + "\n")
                                 checkToReturn = False
                             else:
                                 print("Fila " + str(line_number) + " vía de impacto SMS")
