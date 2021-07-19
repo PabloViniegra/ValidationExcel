@@ -33,21 +33,28 @@ class PremiamosTuConfianzaDentalPre:
                     if pd.isna(row['N_TARJETA']) and pd.isna(row['NIF']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
                         checkToReturn = False
-                    #validación de la vía de impacto
+                    # validación de la vía de impacto
                     if pd.isna(row['CORREO_CLIENTE']):
                         print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
                         if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
                             print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                             with open('../validations.txt', 'a') as f:
-                                f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
                             checkToReturn = False
                         else:
-                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row['TELEFONO_MOVIL_SMS'] == '696 696 696') or (row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row['TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
-                                print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
                                 with open('../validations.txt', 'a') as f:
-                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teléfono no son válidos en " + file + "\n")
                                 checkToReturn = False
                             else:
                                 print("Fila " + str(line_number) + " vía de impacto SMS")
@@ -113,6 +120,30 @@ class VentajasBasico:
                         sheet = workbook.active
                         sheet["Y" + str(line_number)] = 'CADB1'
                         workbook.save(pathToFiles + file)
+                    # validación de la vía de impacto
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                     # Escribimos en la columna TARGET su valor correspondiente
                     workbook = load_workbook(filename=pathToFiles + file)
                     sheet = workbook.active
@@ -170,6 +201,30 @@ class VentajasPlena:
                         sheet = workbook.active
                         sheet["Y" + str(line_number)] = 'CAD2'
                         workbook.save(pathToFiles + file)
+                        # validación de la vía de impacto
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teléfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                     # Escribimos en la columna TARGET el valor especificado
                     workbook = load_workbook(filename=pathToFiles + file)
                     sheet = workbook.active
@@ -238,6 +293,29 @@ class RevisionMedica:
                         with open('../validations.txt', 'a') as f:
                             f.write(str(datetime.datetime.now()) + ": La fila " + str(
                                 line_number) + " tiene un tipo distinto del establecido en " + file + "\n")
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teléfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                     line_number += 1
             else:
                 raise Exception(file + " is not an Excel File !")
@@ -278,6 +356,29 @@ class SACAdeslasBasicaYPlena:
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
                         workbook.save(pathToFiles + file)
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                 line_number += 1
                 print("Se establece en la columna TARGET el valor GRAL por defecto en " + file)
             else:
@@ -295,7 +396,6 @@ class CaixaAccidentes:
 
     def executeValidations(self):
         checkToReturn = True
-        checkIfBrandExist = True
         for file in self.excelfiles:
             print("Analizando " + file + " ....")
             if re.match(self.patternToExcel, file, re.M | re.I):
@@ -313,7 +413,8 @@ class CaixaAccidentes:
                     print("Se escribe GRAL en la celda AB" + str(line_number))
                     # validación del idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
@@ -324,8 +425,30 @@ class CaixaAccidentes:
                         with open('../validations.txt', 'a') as f:
                             f.write(str(datetime.datetime.now()) + ": La fila " + str(
                                 line_number) + " no tiene datos en la columna MARCA en " + file + "\n")
-                        checkIfBrandExist = False
                         checkToReturn = False
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                     line_number += 1
                 workbook.save(pathToFiles + file)
             else:
@@ -351,7 +474,8 @@ class PremiamosTuConfianzaDentalPost:
                 for index, row in df.iterrows():
                     # validación de idioma
                     if pd.isna(row['IDIOMA']):
-                        print("La fila " + str(line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
+                        print("La fila " + str(
+                            line_number) + " no tiene idioma en " + file + ". Se establece CAS por defecto")
                         workbook = load_workbook(filename=pathToFiles + file)
                         sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
@@ -360,13 +484,38 @@ class PremiamosTuConfianzaDentalPost:
                     if pd.isna(row['N_TARJETA']) and pd.isna(row['NIF']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
                         checkToReturn = False
                     if 'SRD4' != row['CODIGO_PROMO']:
                         print("La fila " + str(line_number) + " no tiene el código promocional correcto en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene el código promocional correcto en " + file + "\n")
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                line_number) + " no tiene el código promocional correcto en " + file + "\n")
                         checkToReturn = False
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                    line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                                checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS'] == '696 696 696') or (
+                                    row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row[
+                                'TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print(
+                                    "La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(
+                                        line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                     line_number += 1
             else:
                 raise Exception(file + " is not an Excel File !")
