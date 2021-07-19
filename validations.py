@@ -18,7 +18,6 @@ class PremiamosTuConfianzaDentalPre:
         for file in self.excelfiles:
             if re.match(self.patternToExcel, file, re.M | re.I):
                 print("Analizando " + file + " ....")
-                checkNIFandCard = True
                 df = pd.read_excel(pathToFiles + file)
                 line_number = 2
                 for index, row in df.iterrows():
@@ -34,10 +33,26 @@ class PremiamosTuConfianzaDentalPre:
                     if pd.isna(row['N_TARJETA']) and pd.isna(row['NIF']):
                         print("La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file)
                         with open('../validations.txt', 'a') as f:
-                            f.write(str(datetime.datetime.now()) + ": La fila " + str(
-                                line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
-                        checkNIFandCard = False
+                            f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene número de tarjeta ni NIF en " + file + "\n")
                         checkToReturn = False
+                    #validación de la vía de impacto
+                    if pd.isna(row['CORREO_CLIENTE']):
+                        print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
+                        if pd.isna(row['TELEFONO_MOVIL_SMS']) and pd.isna(row['TELEFONO_MOVIL_SMS_2']):
+                            print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                            with open('../validations.txt', 'a') as f:
+                                f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente en " + file + "\n")
+                            checkToReturn = False
+                        else:
+                            if (row['TELEFONO_MOVIL_SMS'] == '666 666 666' or row['TELEFONO_MOVIL_SMS'] == '696 696 696') or (row['TELEFONO_MOVIL_SMS_2'] == '666 666 666' or row['TELEFONO_MOVIL_SMS_2'] == '696 696 696'):
+                                print("La fila " + str(line_number) + " no tiene ni correo ni teléfono para ese cliente")
+                                with open('../validations.txt', 'a') as f:
+                                    f.write(str(datetime.datetime.now()) + ": La fila " + str(line_number) + " los números de teéfono no son válidos en " + file + "\n")
+                                checkToReturn = False
+                            else:
+                                print("Fila " + str(line_number) + " vía de impacto SMS")
+                    else:
+                        print("Fila " + str(line_number) + " vía de impacto CORREO")
                     line_number += 1
             else:
                 raise Exception(file + " is not an Excel File !")
