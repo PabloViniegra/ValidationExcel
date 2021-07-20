@@ -14,7 +14,7 @@ if len(sys.argv) == 2:
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
             with open('../OK.txt', 'a') as f:
-                f.write("Se han realizado las validaciones son problema")
+                f.write("Se han realizado las validaciones sin problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Ventajas_Basico' == sys.argv[1]:
@@ -24,7 +24,7 @@ if len(sys.argv) == 2:
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
             with open('../OK.txt', 'a') as f:
-                f.write("Se han realizado las validaciones son problema")
+                f.write("Se han realizado las validaciones sin problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Ventajas_Plena' == sys.argv[1]:
@@ -34,7 +34,7 @@ if len(sys.argv) == 2:
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
             with open('../OK.txt', 'a') as f:
-                f.write("Se han realizado las validaciones son problema")
+                f.write("Se han realizado las validaciones sin problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Revision_Medica' == sys.argv[1]:
@@ -53,7 +53,7 @@ if len(sys.argv) == 2:
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
             with open('../OK.txt', 'a') as f:
-                f.write("Se han realizado las validaciones son problema")
+                f.write("Se han realizado las validaciones sin problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Caixa_Accidentes' == sys.argv[1]:
@@ -63,7 +63,7 @@ if len(sys.argv) == 2:
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
             with open('../OK.txt', 'a') as f:
-                f.write("Se han realizado las validaciones son problema")
+                f.write("Se han realizado las validaciones sin problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     elif 'Premiamos_Tu_Confianza_Dental_Post' == sys.argv[1]:
@@ -73,7 +73,7 @@ if len(sys.argv) == 2:
         if check:
             print(sys.argv[1] + " ha pasado las validaciones correctamente")
             with open('../OK.txt', 'a') as f:
-                f.write("Se han realizado las validaciones son problema")
+                f.write("Se han realizado las validaciones sin problema")
         else:
             print("No han pasado las validaciones. Revise el archivo validaciones.txt")
     else:

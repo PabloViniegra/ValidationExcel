@@ -86,10 +86,11 @@ class VentajasBasico:
     def executeValidations(self):
         checkToReturn = True
         for file in self.excelfiles:
-
             if re.match(self.patternToExcel, file, re.M | re.I):
                 print("Analizando " + file + " ....")
                 df = pd.read_excel(pathToFiles + file)
+                workbook = load_workbook(filename=pathToFiles + file)
+                sheet = workbook.active
                 line_number = 2
                 # validacion de si en target corresponde JOV o GRAL
                 if '_JOV_' in file:
@@ -107,10 +108,7 @@ class VentajasBasico:
                     if pd.isna(row['IDIOMA']):
                         print("La fila " + str(
                             line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS")
-                        workbook = load_workbook(filename=pathToFiles + file)
-                        sheet = workbook.active
                         sheet["C" + str(line_number)] = "CAS"
-                        workbook.save('ExcelFiles/' + file)
                         with open('../OK.txt', 'a') as f:
                             f.write("La fila " + str(
                                 line_number) + " no tiene idioma en " + file + " .Se establece por defecto en CAS" + "\n")
@@ -125,15 +123,12 @@ class VentajasBasico:
                     if 'CADB1' != row['CODIGO_PROMO'] or pd.isna(row['CODIGO_PROMO']):
                         print("La fila " + str(
                             line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CADB1 por defecto")
-                        workbook = load_workbook(filename=pathToFiles + file)
-                        sheet = workbook.active
                         sheet["Y" + str(line_number)] = 'CADB1'
-                        workbook.save(pathToFiles + file)
                         with open('../OK.txt', 'a') as f:
                             f.write("La fila " + str(
                                 line_number) + " no tiene el codigo de promoción correcto en " + file + ". Se establece CADB1 por defecto" + "\n")
                     # validación de la vía de impacto
-                    if pd.isna(row['CORREO_CLIENTE']):
+                    if pd.isna(row['EMAIL']):
                         print("Fila " + str(line_number) + " no hay correo. Se revisan los telefonos")
                         with open('../OK.txt', 'a') as f:
                             f.write("La fila " + str(
@@ -162,6 +157,7 @@ class VentajasBasico:
                         with open('../OK.txt', 'a') as f:
                             f.write("Fila " + str(line_number) + " su vía de impacto es EMAIL" "\n")
                     line_number += 1
+                workbook.save(pathToFiles + file)
             else:
                 raise Exception(file + " is not an Excel File !")
         return checkToReturn
